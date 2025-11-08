@@ -1,28 +1,40 @@
-import { useState } from 'react'
+import { useState } from "react";
+import HeroHeader from "./components/HeroHeader";
+import AuthTabs from "./components/AuthTabs";
+import FlowOverview from "./components/FlowOverview";
+import DemoPanels from "./components/DemoPanels";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
+    <div className="min-h-screen bg-gray-50">
+      <HeroHeader />
+
+      {!user ? (
+        <AuthTabs onAuth={setUser} />
+      ) : (
+        <div className="mx-auto -mt-12 max-w-3xl rounded-2xl border border-green-200 bg-white p-6 text-center shadow-xl">
+          <p className="text-sm text-gray-700">
+            Signed in as <span className="font-semibold">{user.email}</span> ({user.role}).
+          </p>
           <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+            className="mt-3 inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm hover:bg-gray-50"
+            onClick={() => setUser(null)}
           >
-            Count is {count}
+            Switch account
           </button>
         </div>
-      </div>
+      )}
+
+      <FlowOverview />
+      <DemoPanels />
+
+      <footer className="border-t bg-white/70 py-8 text-center text-xs text-gray-500">
+        © {new Date().getFullYear()} SweepStreak. Keep the streak alive.
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
